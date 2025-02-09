@@ -1,25 +1,35 @@
 package main
 
 import (
-	"log"
+	"fmt"
+	"os"
 
-	"github.com/tiwariParth/go-todo-cli/internal/app"
 	"github.com/tiwariParth/go-todo-cli/internal/cli"
-	"github.com/tiwariParth/go-todo-cli/internal/storage/memory"
+	"github.com/tiwariParth/go-todo-cli/internal/task"
 )
 
+const dataFile = "tasks.json"
+
 func main() {
-    // Initialize storage
-    store := memory.NewMemoryStore()
-    
-    // Initialize application
-    todoApp := app.NewTodoApp(store)
-    
-    // Initialize CLI
-    cli := cli.NewCLI(todoApp)
-    
-    // Run the application
-    if err := cli.Run(); err != nil {
-        log.Fatalf("Application error: %v", err)
-    }
+	store := task.NewTaskStore()
+
+	// Load tasks from file (if it exists)
+	if err := store.LoadFromFile(dataFile); err != nil {
+		fmt.Printf("Warning: Failed to load tasks: %v\n", err)
+	}
+
+	// Initialize CLI
+	app := cli.NewCLI(store)
+
+	// Run CLI with command-line arguments
+	if err := app.Run(os.Args[1:]); err != nil {
+		fmt.Printf("Error: %v\n", err)
+		os.Exit(1)
+	}
+
+	// Save tasks to file
+	if err := store.SaveToFile(dataFile); err != nil {
+		fmt.Printf("Error: Failed to save tasks: %v\n", err)
+		os.Exit(1)
+	}
 }

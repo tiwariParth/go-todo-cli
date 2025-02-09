@@ -1,0 +1,23 @@
+{
+  "tasks": {
+    "2": {
+      "id": 2,
+      "name": "Write tests",
+      "completed": true,
+      "due_date": "0001-01-01T00:00:00Z",
+      "priority": "",
+      "created_at": "2025-02-09T10:09:04.599596346+05:30",
+      "completed_at": "0001-01-01T00:00:00Z"
+    },
+    "3": {
+      "id": 3,
+      "name": "Call mom",
+      "completed": false,
+      "due_date": "0001-01-01T00:00:00Z",
+      "priority": "",
+      "created_at": "2025-02-09T10:09:04.602887908+05:30",
+      "completed_at": "0001-01-01T00:00:00Z"
+    }
+  },
+  "next_id": 4
+}
